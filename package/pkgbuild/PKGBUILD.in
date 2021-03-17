@@ -1,0 +1,37 @@
+# Maintainer: Bart Verhagen <barrie.verhagen at gmail dot com>
+pkgname=('@PACKAGE@')
+pkgbase='@PACKAGE@'
+pkgver=@VERSION@
+pkgrel=@PKGREL@
+epoch=@EPOCH@
+pkgdesc="Plugins for exec-helper"
+arch=('any')
+url="https://github.com/exec-helper/plugins"
+license=('BSD')
+groups=()
+depends=('exec-helper')
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=('@PACKAGE@=@VERSION@')
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=@CHANGELOG@
+source=("@PACKAGE@::git+$url.git#commit=@GIT_REF@")
+noextract=()
+validpgpkeys=()
+
+_git_dir='@PACKAGE@'
+
+pkgver() {
+    printf "%s" $pkgver
+}
+
+package() {
+    install -D --mode=644 $_git_dir/plugins/*.lua --target-directory "$pkgdir/usr/share/exec-helper/plugins"
+}
+
+md5sums=('SKIP')

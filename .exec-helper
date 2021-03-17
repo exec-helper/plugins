@@ -1,0 +1,32 @@
+commands:
+    package: package-src + package-bin
+    package-src: Create source package for the given PACKAGE_TECH
+    package-bin: Create binary package for the given PACKAGE_TECH
+
+patterns:
+    PACKAGE_TECH:
+        default-values:
+            - pkgbuild
+        short-option: p
+        long-option: package-tech
+
+package-src:
+    - make
+
+package-bin:
+    - make
+
+package:
+    - package-src
+    - package-bin
+
+make:
+    patterns:
+        - PACKAGE_TECH
+    build-dir: "package/{PACKAGE_TECH}"
+
+    package-src:
+        command-line: install
+
+    package-bin:
+        command-line: binary

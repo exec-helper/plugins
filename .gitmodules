@@ -1,0 +1,3 @@
+[submodule "package/pkgbuild/pkgbuild-generator"]
+	path = package/pkgbuild/pkgbuild-generator
+	url = https://github.com/VerhagenConsultancy/pkgbuild-generator.git

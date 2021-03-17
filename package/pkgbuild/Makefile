@@ -1,0 +1,36 @@
+CURDIR:=$(shell pwd)
+
+PROJECT_NAME?=exec-helper-plugins
+PREFIX?=$(CURDIR)/../../dist
+SOURCE_DIR?=$(CURDIR)/../../plugins
+PKG_IN?=$(CURDIR)/PKGBUILD.in
+
+BUILD_DIR:=$(CURDIR)/build_package
+
+all: source
+
+# Stable version
+prepare:
+	$(MAKE) generate TARGET=prepare
+
+source: prepare
+
+binary:
+	$(MAKE) generate TARGET=build
+	@echo "You can find the binary package here: $(shell ls $(BUILD_DIR)/$(PROJECT_NAME)*.tar.xz)"
+
+install: source
+	$(MAKE) generate TARGET=install
+
+# Utility target
+generate:
+	$(MAKE) --directory pkgbuild-generator PROJECT_NAME=$(PROJECT_NAME) "SOURCE_DIR=$(SOURCE_DIR)" "PKG_IN=$(PKG_IN)" "GITCHANGELOG_RC=$(CURDIR)/../../.gitchangelog.rc" "BUILD_DIR=$(BUILD_DIR)" "PREFIX=$(PREFIX)" $(TARGET)
+
+clean:
+	rm -rf $(BUILD_DIR)
+	rm -rf $(PREFIX)
+
+list:
+	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
+
+.PHONY: clean list generate all prepare source build install
