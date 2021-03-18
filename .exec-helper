@@ -2,6 +2,7 @@ commands:
     package: package-src + package-bin
     package-src: Create source package for the given PACKAGE_TECH
     package-bin: Create binary package for the given PACKAGE_TECH
+    distclean: Dist clean repository
 
 patterns:
     PACKAGE_TECH:
@@ -20,6 +21,9 @@ package:
     - package-src
     - package-bin
 
+distclean:
+    - command-line-command
+
 make:
     patterns:
         - PACKAGE_TECH
@@ -30,3 +34,7 @@ make:
 
     package-bin:
         command-line: binary
+
+command-line-command:
+    distclean:
+        command-line: [ rm, --recursive, --force, dist, package/pkgbuild/build_package]

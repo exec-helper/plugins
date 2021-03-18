@@ -1,0 +1,51 @@
+name: pkgbuild-package
+on: [push, pull_request]
+jobs:
+  build-src:
+    runs-on: ubuntu-latest
+    container:
+      image: bverhagen/exec-helper:arch-linux
+    steps:
+      - name: Fix permissions in the working directory
+        run: sudo chmod -R a+w .
+      - name: Fix permissions in the $HOME directory
+        run: sudo chmod -R a+w "${HOME}"
+      - uses: actions/checkout@v2
+      - name: Checkout submodules the - unfortunately - manual way
+        run: git submodule update --init
+      - run: sudo pacman -Sy --needed --noconfirm base-devel python python-pip python-wheel namcap
+      - run: yay -S --needed --noconfirm --noprovides --builddir /tmp --absdir /tmp python-gitchangelog
+      - name: Build source files
+        run: exec-helper package-src
+      - name: Check src package
+        run: namcap dist/PKGBUILD
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pkgbuild-src-package
+          path: dist/
+          retention-days: 5
+
+  build-binary:
+    needs: build-src
+    runs-on: ubuntu-latest
+    container:
+      image: bverhagen/exec-helper:arch-linux
+    steps:
+      - name: Fix permissions in the working directory
+        run: sudo chmod -R a+w .
+      - run: sudo pacman -Sy --needed --noconfirm base-devel namcap
+      - uses: actions/checkout@v2
+      - name: Download source package
+        uses: actions/download-artifact@v2
+        with:
+          name: pkgbuild-src-package
+      - name: Build binary package
+        run: makepkg --noconfirm --needed --syncdeps --config package/pkgbuild/makepkg.conf
+      - name: Check binary package
+        run: sh -c 'namcap exec-helper-plugins-*.tar.xz'
+      - name: Upload Package Archive
+        uses: actions/upload-artifact@v2
+        with:
+          path: exec-helper-plugins-*.tar.xz
+          name: pkgbuild-binary-package
+          retention-days: 5

@@ -9,10 +9,10 @@ arch=('any')
 url="https://github.com/exec-helper/plugins"
 license=('BSD')
 groups=()
-depends=('exec-helper')
-makedepends=()
+depends=()
+makedepends=('git')
 checkdepends=()
-optdepends=()
+optdepends=('exec-helper')
 provides=('@PACKAGE@=@VERSION@')
 conflicts=()
 replaces=()
@@ -24,14 +24,13 @@ source=("@PACKAGE@::git+$url.git#commit=@GIT_REF@")
 noextract=()
 validpgpkeys=()
 
-_git_dir='@PACKAGE@'
-
 pkgver() {
     printf "%s" $pkgver
 }
 
 package() {
-    install -D --mode=644 $_git_dir/plugins/*.lua --target-directory "$pkgdir/usr/share/exec-helper/plugins"
+    install -Dm644 $pkgname/plugins/*.lua --target-directory "$pkgdir/usr/share/exec-helper/plugins"
+    install -Dm644 $pkgname/LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 
 md5sums=('SKIP')

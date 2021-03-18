@@ -17,7 +17,7 @@ source: prepare
 
 binary:
 	$(MAKE) generate TARGET=build
-	@echo "You can find the binary package here: $(shell ls $(BUILD_DIR)/$(PROJECT_NAME)*.tar.xz)"
+	@echo "You can find the binary package here: $(BUILD_DIR)"
 
 install: source
 	$(MAKE) generate TARGET=install
