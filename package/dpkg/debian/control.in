@@ -1,0 +1,23 @@
+Source: exec-helper-plugins
+Maintainer: bverhagen <barrie.verhagen@gmail.com>
+Section: misc
+Priority: optional
+Build-Depends:
+    debhelper-compat (= 11),
+Standards-Version: 4.1.0
+Homepage: https://github.com/bverhagen/exec-helper-plugins
+Vcs-Browser: https://github.com/bverhagen/exec-helper-plugins
+Vcs-Git: https://github.com/bverhagen/exec-helper-plugins.git
+
+Package: exec-helper-plugins
+Architecture: all
+Section: misc
+Priority: optional
+Depends:
+    ${shlibs:Depends},
+    ${misc:Depends}
+Recommends:
+    exec-helper
+Description: Plugins for exec-helper
+ This package provides useful plugins for exec-helper
+Homepage: https://github.com/bverhagen/exec-helper-plugin
