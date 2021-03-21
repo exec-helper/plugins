@@ -8,6 +8,7 @@ patterns:
     PACKAGE_TECH:
         default-values:
             - pkgbuild
+            - dpkg
         short-option: p
         long-option: package-tech
 
@@ -30,11 +31,11 @@ make:
     build-dir: "package/{PACKAGE_TECH}"
 
     package-src:
-        command-line: install
+        command-line: source
 
     package-bin:
         command-line: binary
 
 command-line-command:
     distclean:
-        command-line: [ rm, --recursive, --force, dist, package/pkgbuild/build_package]
+        command-line: [ rm, --recursive, --force, dist, package/pkgbuild/build_package, package/dpkg/build]

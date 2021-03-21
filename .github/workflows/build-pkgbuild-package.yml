@@ -10,13 +10,13 @@ jobs:
         run: sudo chmod -R a+w .
       - name: Fix permissions in the $HOME directory
         run: sudo chmod -R a+w "${HOME}"
+      - run: sudo pacman -Sy --needed --noconfirm base-devel python python-pip python-wheel namcap
+      - run: yay -S --needed --noconfirm --noprovides --builddir /tmp --absdir /tmp python-gitchangelog
       - uses: actions/checkout@v2
       - name: Checkout submodules the - unfortunately - manual way
         run: git submodule update --init
-      - run: sudo pacman -Sy --needed --noconfirm base-devel python python-pip python-wheel namcap
-      - run: yay -S --needed --noconfirm --noprovides --builddir /tmp --absdir /tmp python-gitchangelog
       - name: Build source files
-        run: exec-helper package-src
+        run: exec-helper package-src --package-tech pkgbuild
       - name: Check src package
         run: namcap dist/PKGBUILD
       - uses: actions/upload-artifact@v2

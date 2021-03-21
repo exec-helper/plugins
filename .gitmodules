@@ -3,4 +3,4 @@
 	url = https://github.com/VerhagenConsultancy/pkgbuild-generator.git
 [submodule "package/dpkg/dpkg-generator"]
 	path = package/dpkg/dpkg-generator
-	url = git@github.com:VerhagenConsultancy/dpkg-generator.git
+	url = https://github.com/VerhagenConsultancy/dpkg-generator.git

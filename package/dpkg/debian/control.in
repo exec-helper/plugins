@@ -3,6 +3,7 @@ Maintainer: bverhagen <barrie.verhagen@gmail.com>
 Section: misc
 Priority: optional
 Build-Depends:
+    debhelper (>= 11~),
     debhelper-compat (= 11),
 Standards-Version: 4.1.0
 Homepage: https://github.com/bverhagen/exec-helper-plugins

@@ -14,13 +14,11 @@ prepare:
 	$(MAKE) generate TARGET=prepare
 
 source: prepare
+	$(MAKE) generate TARGET=install
 
 binary:
 	$(MAKE) generate TARGET=build
 	@echo "You can find the binary package here: $(BUILD_DIR)"
-
-install: source
-	$(MAKE) generate TARGET=install
 
 # Utility target
 generate:
