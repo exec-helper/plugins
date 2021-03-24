@@ -12,6 +12,9 @@ patterns:
         short-option: p
         long-option: package-tech
 
+additional-search-paths:
+    - plugins
+
 package-src:
     - make
 
